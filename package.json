@@ -1,0 +1,18 @@
+{
+  "name": "community-cordova-plugin-sensors",
+  "version": "1.0.0",
+  "types": "./types/index.d.ts",
+  "readme": "README.md",
+  "repository": "EYALIN/community-cordova-plugin-sensors/tree/master",
+  "homepage": "https://github.com/EYALIN/community-cordova-plugin-sensors/tree/master",
+  "funding": "https://github.com/sponsors/EYALIN",
+  "bugs": "https://github.com/EYALIN/community-cordova-plugin-sensors/issues",
+  "cordova": {
+    "id": "community-cordova-plugin-sensors",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "description": "A plugin for full detail for each sensor"
+}
