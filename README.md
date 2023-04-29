@@ -21,7 +21,7 @@ or if you're asking for new features or priority bug fixes. Thank you!
 
 ## Functions
 
-####getSensorList:Promise<SensorModel[]>:
+#### getSensorList:Promise<SensorModel[]>:
 
 ## Models
 ### SensorModel
