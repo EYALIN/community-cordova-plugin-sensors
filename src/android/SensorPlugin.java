@@ -84,8 +84,10 @@ public class SensorPlugin extends CordovaPlugin {
               callbackContext.sendPluginResult(result);
             }
      } catch (Exception e) {
-                LOG.e(TAG, e.getMessage(), e);
-            }
+         callbackContext.error(e.getMessage());
+         Log.d(TAG, e.getMessage());
+         return false;
+    }
     return true;
   }
 
