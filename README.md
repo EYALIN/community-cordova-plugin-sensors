@@ -19,12 +19,17 @@ or if you're asking for new features or priority bug fixes. Thank you!
 
     cordova plugin add community-cordova-plugin-sensors
 
+## Examples
+
+    declare var SensorPlugin: SensorManager;
+    const sm: ISensor[] = await SensorPlugin.getSensorList()
+
 ## Functions
 
-#### getSensorList:Promise<SensorModel[]>:
+#### getSensorList:Promise<ISensor[]>:
 
-## Models
-### SensorModel
+## Interfaces
+### ISensor
 - __name__ - name string of the sensor. The name is guaranteed to be unique for a particular sensor type.
 - __fifoMaxEventCount__ - Maximum number of events of this sensor that could be batched. If this value is zero it indicates that batch mode is not supported for this sensor. If other applications registered to batched sensors, the actual number of events that can be batched might be smaller because the hardware FiFo will be partially used to batch the other sensors.
 - __fifoReservedEventCount__ - Number of events reserved for this sensor in the batch mode FIFO. This gives a guarantee on the minimum number of events that can be batched.

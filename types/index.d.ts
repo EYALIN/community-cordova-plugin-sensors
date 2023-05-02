@@ -1,4 +1,4 @@
-export interface SensorModel  {
+export interface ISensor  {
     /* name string of the sensor. The name is guaranteed to be unique for a particular sensor type. */
     name: string;
     /* Maximum number of events of this sensor that could be batched. If this value is zero it indicates that batch mode is not supported for this sensor. If other applications registered to batched sensors, the actual number of events that can be batched might be smaller because the hardware FiFo will be partially used to batch the other sensors. */
@@ -10,7 +10,7 @@ export interface SensorModel  {
     /* The sensor id that will be unique for the same app unless the device is factory reset. Return value of 0 means this sensor does not support this function; return value of -1 means this sensor can be uniquely identified in system by combination of its type and name. */
     id: number;
     /* 	The max delay for this sensor in microseconds. */
-    maxDelay: boolean;
+    maxDelay: number;
     /* maximum range of the sensor in the sensor's unit. */
     maximumRange: number;
     /* 	the minimum delay allowed between two events in microseconds or zero if this sensor only returns a value when the data it's measuring changes. Note that if the app does not have the Manifest.permission.HIGH_SAMPLING_RATE_SENSORS permission, the minimum delay is capped at 5000 microseconds (200 Hz). */
@@ -24,7 +24,7 @@ export interface SensorModel  {
     /* The type of this sensor as a string.*/
     stringType: string;
     /* generic type of this sensor. */
-    type: string;
+    type: number;
     /* vendor string of this sensor.*/
     vendor: string;
     /* version of the sensor's module.*/
@@ -35,4 +35,8 @@ export interface SensorModel  {
     isDynamicSensor: boolean;
     /* Returns true if the sensor is a wake-up sensor. */
     isWakeUpSensor: boolean;
+}
+
+export default class SensorManager{
+    getSensorList():Promise<ISensor[]>;
 }

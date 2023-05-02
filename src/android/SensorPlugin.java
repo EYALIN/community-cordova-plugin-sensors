@@ -17,6 +17,7 @@ import java.util.Date;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import java.util.List;
+import org.apache.cordova.LOG;
 
 public class SensorPlugin extends CordovaPlugin {
   private static final String TAG = "SensorPlugin";
@@ -40,7 +41,9 @@ public class SensorPlugin extends CordovaPlugin {
         }
 
   public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
-    if(action.equals("echo")) {
+          try {
+
+    if(action.equals("getSensorList")) {
     JSONArray arr = new JSONArray();
         mPackageManager = getContext().getPackageManager();
         SensorManager oSM = (SensorManager) getContext().getSystemService(Context.SENSOR_SERVICE);
@@ -59,7 +62,11 @@ public class SensorPlugin extends CordovaPlugin {
         obj.put("power",s.getPower());
         obj.put("reportingMode",s.getReportingMode());
         obj.put("resolution",s.getResolution());
-        obj.put("stringType",s.getStringType());
+        String stringType = s.getStringType();
+        if (stringType != null) {
+           stringType = stringType.replace("android.sensor.","");
+        }
+        obj.put("stringType",stringType);
         obj.put("type",s.getType());
         obj.put("vendor",s.getVendor());
         obj.put("version",s.getVersion());
@@ -70,12 +77,15 @@ public class SensorPlugin extends CordovaPlugin {
         }
       String phrase = args.getString(0);
       final PluginResult result = new PluginResult(PluginResult.Status.OK, arr);
-  callbackContext.sendPluginResult(result);
- } else if(action.equals("getDate")) {
-      // An example of returning data back to the web layer
-      final PluginResult result = new PluginResult(PluginResult.Status.OK, (new Date()).toString());
-      callbackContext.sendPluginResult(result);
-    }
+          callbackContext.sendPluginResult(result);
+         } else if(action.equals("getDate")) {
+              // An example of returning data back to the web layer
+              final PluginResult result = new PluginResult(PluginResult.Status.OK, (new Date()).toString());
+              callbackContext.sendPluginResult(result);
+            }
+     } catch (Exception e) {
+                LOG.e(TAG, e.getMessage(), e);
+            }
     return true;
   }
 
