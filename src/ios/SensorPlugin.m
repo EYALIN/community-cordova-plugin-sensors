@@ -1,8 +1,8 @@
-#import "MyCordovaPlugin.h"
+#import "SensorPlugin.h"
 
 #import <Cordova/CDVAvailability.h>
 
-@implementation MyCordovaPlugin
+@implementation SensorPlugin
 
 - (void)pluginInitialize {
 }
