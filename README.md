@@ -14,7 +14,6 @@ or if you're asking for new features or priority bug fixes. Thank you!
 [![](https://img.shields.io/static/v1?label=Sponsor%20Me&style=for-the-badge&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/eyalin)
 
 
-Certainly! I'll create a README file for your `community-cordova-plugin-sensors` plugin, detailing the response structure for both Android and iOS platforms, and include the MIT license.
 
 ---
 
