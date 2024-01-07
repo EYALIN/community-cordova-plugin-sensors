@@ -1,28 +1,50 @@
 #import "SensorPlugin.h"
+#import <CoreMotion/CoreMotion.h>
 
-#import <Cordova/CDVAvailability.h>
+@interface SensorPlugin ()
+@property (strong, nonatomic) CMMotionManager *motionManager;
+@end
 
 @implementation SensorPlugin
 
 - (void)pluginInitialize {
+    self.motionManager = [[CMMotionManager alloc] init];
 }
 
-- (void)echo:(CDVInvokedUrlCommand *)command {
-  NSString* phrase = [command.arguments objectAtIndex:0];
-  NSLog(@"%@", phrase);
+- (void)getSensorList:(CDVInvokedUrlCommand *)command {
+    NSMutableArray *sensorsArray = [[NSMutableArray alloc] init];
+
+    // Accelerometer
+    if (self.motionManager.isAccelerometerAvailable) {
+        [sensorsArray addObject:[self sensorDictionaryWithName:@"Accelerometer" type:@"Accelerometer"]];
+    }
+
+    // Gyroscope
+    if (self.motionManager.isGyroAvailable) {
+        [sensorsArray addObject:[self sensorDictionaryWithName:@"Gyroscope" type:@"Gyroscope"]];
+    }
+
+    // Magnetometer
+    if (self.motionManager.isMagnetometerAvailable) {
+        [sensorsArray addObject:[self sensorDictionaryWithName:@"Magnetometer" type:@"Magnetometer"]];
+    }
+
+    // Device Motion
+    if (self.motionManager.isDeviceMotionAvailable) {
+        [sensorsArray addObject:[self sensorDictionaryWithName:@"Device Motion" type:@"DeviceMotion"]];
+    }
+
+    // Creating the plugin result
+    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:sensorsArray];
+    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 }
 
-- (void)getDate:(CDVInvokedUrlCommand *)command {
-  NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-  NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
-  [dateFormatter setLocale:enUSPOSIXLocale];
-  [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
-
-  NSDate *now = [NSDate date];
-  NSString *iso8601String = [dateFormatter stringFromDate:now];
-
-  CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:iso8601String];
-  [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+- (NSDictionary *)sensorDictionaryWithName:(NSString *)name type:(NSString *)type {
+    return @{
+        @"name": name,
+        @"type": type,
+        // Add other sensor properties as needed
+    };
 }
 
 @end

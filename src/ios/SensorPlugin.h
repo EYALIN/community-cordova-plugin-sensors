@@ -1,10 +1,8 @@
-#import <Cordova/CDVPlugin.h>
+#import <Cordova/CDV.h>
 
-@interface SensorPlugin : CDVPlugin {
-}
+@interface SensorPlugin : CDVPlugin
 
-// The hooks for our plugin commands
-- (void)echo:(CDVInvokedUrlCommand *)command;
-- (void)getDate:(CDVInvokedUrlCommand *)command;
+// Method to get the list of sensors
+- (void)getSensorList:(CDVInvokedUrlCommand *)command;
 
 @end

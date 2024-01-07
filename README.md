@@ -14,51 +14,91 @@ or if you're asking for new features or priority bug fixes. Thank you!
 [![](https://img.shields.io/static/v1?label=Sponsor%20Me&style=for-the-badge&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/eyalin)
 
 
+Certainly! I'll create a README file for your `community-cordova-plugin-sensors` plugin, detailing the response structure for both Android and iOS platforms, and include the MIT license.
+
+---
+
+# community-cordova-plugin-sensors
+
+`community-cordova-plugin-sensors` is a Cordova plugin that enables access to sensor data on Android and iOS devices. It provides functionality to retrieve a list of available sensors and their properties.
+
+## Features
+
+- Retrieve a list of sensors available on the device.
+- Access sensor properties on Android and iOS.
 
 ## Installation
 
-    cordova plugin add community-cordova-plugin-sensors
+```bash
+cordova plugin add community-cordova-plugin-sensors
+```
 
-## Examples
-
-    declare var SensorPlugin: SensorManager;
-    const sm: ISensor[] = await SensorPlugin.getSensorList()
-
-## Functions
-
-#### getSensorList:Promise<ISensor[]>:
-
-## Interfaces
-### ISensor
-- __name__ - name string of the sensor. The name is guaranteed to be unique for a particular sensor type.
-- __fifoMaxEventCount__ - Maximum number of events of this sensor that could be batched. If this value is zero it indicates that batch mode is not supported for this sensor. If other applications registered to batched sensors, the actual number of events that can be batched might be smaller because the hardware FiFo will be partially used to batch the other sensors.
-- __fifoReservedEventCount__ - Number of events reserved for this sensor in the batch mode FIFO. This gives a guarantee on the minimum number of events that can be batched.
-- __highestDirectReportRateLevel__ - Get the highest supported direct report mode rate level of the sensor.
-- __id__ - The sensor id that will be unique for the same app unless the device is factory reset. Return value of 0 means this sensor does not support this function; return value of -1 means this sensor can be uniquely identified in system by combination of its type and name.
-- __maxDelay__ - The max delay for this sensor in microseconds.
-- __maximumRange__ - maximum range of the sensor in the sensor's unit. 
-- __minDelay__ - the minimum delay allowed between two events in microseconds or zero if this sensor only returns a value when the data it's measuring changes. Note that if the app does not have the Manifest.permission.HIGH_SAMPLING_RATE_SENSORS permission, the minimum delay is capped at 5000 microseconds (200 Hz).
-- __power__ - the power in mA used by this sensor while in use
-- __reportingMode__ - Reporting mode for the input sensor, one of REPORTING_MODE_* constants.
-- __resolution__ - resolution of the sensor in the sensor's unit.
-- __stringType__ - The type of this sensor as a string
-- __type__ - generic type of this sensor.
-- __vendor__ - vendor string of this sensor.
-- __version__ - version of the sensor's module.
-- __isAdditionalInfoSupported__ - Returns true if the sensor supports sensor additional information API .
-- __isDynamicSensor__ - true if the sensor is a dynamic sensor (sensor added at runtime).
-- __isWakeUpSensor__ - Returns true if the sensor is a wake-up sensor.
-
-
-
-
-
-
-### Supported Platforms
-
+## Supported Platforms
 
 - Android
+- iOS
 
+## Usage
+
+To use the plugin, call the `getSensorList` method. This method returns a promise that resolves with an array of sensor objects.
+
+### Example
+
+```javascript
+document.addEventListener('deviceready', onDeviceReady, false);
+
+function onDeviceReady() {
+    window.SensorPlugin.getSensorList()
+        .then(sensors => {
+            console.log('Sensors:', sensors);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+```
+
+## API
+
+### Methods
+
+#### getSensorList
+
+Returns a promise that resolves with an array of sensor objects.
+
+- **Android Response**: Each sensor object includes the following properties:
+    - `name`: String. Unique name of the sensor.
+    - `fifoMaxEventCount`: Integer. Maximum number of events that can be batched.
+    - `fifoReservedEventCount`: Integer. Number of events reserved for batching.
+    - `highestDirectReportRateLevel`: Integer. Highest direct report rate level.
+    - `id`: Integer. Unique sensor identifier.
+    - `maxDelay`: Integer. Maximum delay in microseconds.
+    - `maximumRange`: Float. Maximum range of the sensor.
+    - `minDelay`: Integer. Minimum delay between events in microseconds.
+    - `power`: Float. Power used by the sensor in mA.
+    - `reportingMode`: Integer. Reporting mode of the sensor.
+    - `resolution`: Float. Resolution of the sensor.
+    - `stringType`: String. Type of the sensor as a string.
+    - `type`: Integer. Generic type of the sensor.
+    - `vendor`: String. Vendor of the sensor.
+    - `version`: Integer. Version of the sensor module.
+    - `isAdditionalInfoSupported`: Boolean. If additional information API is supported.
+    - `isDynamicSensor`: Boolean. If the sensor is dynamic.
+    - `isWakeUpSensor`: Boolean. If the sensor is a wake-up sensor.
+
+- **iOS Response**: Each sensor object includes the following properties:
+    - `name`: String. Name of the sensor (e.g., "Accelerometer", "Gyroscope").
+    - `type`: String. Type of the sensor (e.g., "Accelerometer", "Gyroscope").
+
+*Note: iOS API limitations mean only the sensor's name and type are available, unlike the comprehensive data available on Android.*
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+This README provides a clear overview of the plugin's capabilities and the differences in data provided by the Android and iOS implementations. Feel free to modify or expand this template as needed for your project.
 
 [w3c_spec]: https://www.w3.org/TR/battery-status/
 [status_object]: #status-object
