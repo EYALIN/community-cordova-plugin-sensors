@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        id="community-cordova-plugin-sensors"
+        version="1.0.3">
+    <name>Cordova Plugin Sensors</name>
+    <description></description>
+    <license>MIT</license>
+    <keywords></keywords>
+    <repo>https://github.com/eyalin/community-cordova-plugin-sensors.git</repo>
+    <issue>https://github.com/eyalin/community-cordova-plugin-sensors/issues</issue>
+
+    <!-- android -->
+    <platform name="android">
+        <js-module src="www/plugin.js" name="SensorPlugin">
+            <runs/>
+
+            <!-- This is the window variable name you want, like window.SensorPlugin -->
+            <clobbers target="SensorPlugin" />
+        </js-module>
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="SensorPlugin">
+                <param name="android-package" value="sensorplugin.SensorPlugin" />
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/SensorPlugin.java" target-dir="src/android" />
+    </platform>
+
+    <!-- ios -->
+    <platform name="ios">
+        <js-module src="www/plugin.js" name="plugin">
+            <runs/>
+            <clobbers target="SensorPlugin" />
+        </js-module>
+        <config-file target="config.xml" parent="/*">
+            <feature name="SensorPlugin">
+                <param name="ios-package" value="SensorPlugin" onload="true" />
+            </feature>
+        </config-file>
+
+        <header-file src="src/ios/SensorPlugin.h" />
+        <source-file src="src/ios/SensorPlugin.m" />
+    </platform>
+</plugin>
