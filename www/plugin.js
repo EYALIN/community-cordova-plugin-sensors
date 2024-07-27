@@ -1,11 +1,11 @@
-var PLUGIN_NAME = 'SensorPlugin';
+var PLUGIN_NAME = 'FilesPickerPlugin';
 
-var SensorPlugin = {
-    getSensorList: function(phrase) {
+var FilesPickerPlugin = {
+    pickFiles: function(options) {
         return new Promise(function (resolve, reject) {
-            cordova.exec(resolve, reject, PLUGIN_NAME, 'getSensorList', [phrase]);
+            cordova.exec(resolve, reject, PLUGIN_NAME, 'pickFiles', [options]);
         });
     },
 };
 
-module.exports = SensorPlugin;
+module.exports = FilesPickerPlugin;
