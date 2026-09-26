@@ -2,13 +2,13 @@
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         id="community-cordova-plugin-sensors"
-        version="1.0.3">
+        version="1.0.5">
     <name>Cordova Plugin Sensors</name>
-    <description></description>
+    <description>Lists the device sensors and streams accelerometer readings (Android and iOS)</description>
     <license>MIT</license>
-    <keywords></keywords>
-    <repo>https://github.com/eyalin/community-cordova-plugin-sensors.git</repo>
-    <issue>https://github.com/eyalin/community-cordova-plugin-sensors/issues</issue>
+    <keywords>cordova,sensors,sensor,accelerometer,shake,ecosystem:cordova,cordova-android,cordova-ios</keywords>
+    <repo>https://github.com/EYALIN/community-cordova-plugin-sensors.git</repo>
+    <issue>https://github.com/EYALIN/community-cordova-plugin-sensors/issues</issue>
 
     <!-- android -->
     <platform name="android">
@@ -40,6 +40,7 @@
             </feature>
         </config-file>
 
+        <framework src="CoreMotion.framework" />
         <header-file src="src/ios/SensorPlugin.h" />
         <source-file src="src/ios/SensorPlugin.m" />
     </platform>

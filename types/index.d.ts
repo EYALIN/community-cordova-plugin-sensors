@@ -37,6 +37,28 @@ export interface ISensor  {
     isWakeUpSensor: boolean;
 }
 
+/** One accelerometer reading: m/s^2 including gravity, Android axes on both platforms. */
+export interface IAccelerometerSample {
+    x: number;
+    y: number;
+    z: number;
+    /** milliseconds since the epoch */
+    timestamp: number;
+}
+
+export interface IWatchAccelerometerOptions {
+    /** milliseconds between samples; default 40 (25 Hz), fastest 5. Android treats it as a hint. */
+    frequency?: number;
+}
+
 export default class SensorManager{
     getSensorList():Promise<ISensor[]>;
+    /**
+     * Streams accelerometer readings to onSample until clearWatchAccelerometer(). A new watch replaces
+     * the running one. onError gets a message when the device has no accelerometer or the sensor
+     * cannot be started. The sensor is released in the background and restarts on resume.
+     */
+    watchAccelerometer(options: IWatchAccelerometerOptions | null | undefined, onSample: (sample: IAccelerometerSample) => void, onError?: (error: string) => void): void;
+    /** Stops the running accelerometer watch; resolves also when none runs. */
+    clearWatchAccelerometer(): Promise<void>;
 }

@@ -25,6 +25,7 @@ or if you're asking for new features or priority bug fixes. Thank you!
 
 - Retrieve a list of sensors available on the device.
 - Access sensor properties on Android and iOS.
+- Stream accelerometer readings (`watchAccelerometer`), with the same units and axes on both platforms.
 
 ## Installation
 
@@ -90,6 +91,32 @@ Returns a promise that resolves with an array of sensor objects.
     - `type`: String. Type of the sensor (e.g., "Accelerometer", "Gyroscope").
 
 *Note: iOS API limitations mean only the sensor's name and type are available, unlike the comprehensive data available on Android.*
+
+#### watchAccelerometer / clearWatchAccelerometer
+
+Streams accelerometer readings until you stop it. A new watch replaces the running one.
+
+```javascript
+window.SensorPlugin.watchAccelerometer(
+    { frequency: 20 },                       // ms between samples; default 40, fastest 5
+    ({ x, y, z, timestamp }) => { /* m/s^2 including gravity */ },
+    (error) => { /* e.g. "No accelerometer on this device" */ }
+);
+
+// later
+await window.SensorPlugin.clearWatchAccelerometer();
+```
+
+- **Android**: `SensorManager` `TYPE_ACCELEROMETER`, sampled at `frequency`. Android treats the period
+  as a hint: readings can arrive somewhat faster or slower.
+- **iOS**: `CMMotionManager` accelerometer updates. Core Motion reports g with the opposite sign;
+  the plugin converts to m/s^2 with Android's signs, so both platforms send the same values
+  (a phone lying face up reads about `z = 9.81`).
+- `onError(message)` is called once, and the watch ends, when the device has no accelerometer or the
+  sensor cannot be started.
+- A new `watchAccelerometer` call replaces the running watch: the earlier `onSample` stops being called.
+- While the app is in the background the sensor is released (no battery drain) and the watch restarts
+  by itself when the app returns. The watch stops on a page reload and when the plugin is torn down.
 
 ## License
 
